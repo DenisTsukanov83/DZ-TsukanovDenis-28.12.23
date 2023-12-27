@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="task-1">
+        <h2>Задача №1</h2>
+        <h3>Напишите функцию, которая делает GET-запрос к API и выводит результат в консоль.</h3>
+        <div class="task-body">
+            <pre>
+            <code>
+
+            function getRequest1(method, url) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open(method, url);
+                    xhr.responseType = 'json';
+            
+                    xhr.onload = () => {
+                        if (xhr.status >= 400) {
+                            reject(xhr.response);
+                        } else {
+                            resolve(xhr.response);
+                        }
+                    }
+            
+                    xhr.onerror = () => {
+                        reject(xhr.response);
+                    }
+            
+                    xhr.send();
+                });
+            }
+
+            getRequest1('GET', 'https://jsonplaceholder.typicode.com/users')
+            .then(data => alert(JSON.stringify(data)));
+            </code>
+            </pre>
+            <div class="task-data">
+                <button class="task-1-btn">Старт</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-2">
+        <h2>Задача №2</h2>
+        <h3>Создайте форму на веб-странице, которая отправляет POST-запрос к API при нажатии кнопки "Отправить".</h3>
+        <div class="task-body">
+            <pre>
+            <code>
+
+            function getRequest2(method, url, name) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open(method, url);
+                    xhr.responseType = 'json';
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+            
+                    xhr.onload = () => {
+                        if (xhr.status >= 400) {
+                            reject(xhr.response);
+                        } else {
+                            resolve(xhr.response);
+                        }
+                    }
+            
+                    xhr.onerror = () => {
+                        reject(xhr.response);
+                    }
+            
+                    const body = {
+                        name: name
+                    }
+            
+                    xhr.send(JSON.stringify(body));
+                });
+            }
+
+            getRequest2('POST', 'https://jsonplaceholder.typicode.com/users', document.querySelector('.task-value-2').value)
+                .then(data => document.querySelector('.task-result-2').textContent = JSON.stringify(data));
+            </code>
+            </pre>
+            <div class="task-data">
+                <form action="">
+                    <input class="task-value-2" placeholder="Введите имя"></input>
+                    <input type="submit" class="task-2-btn">
+                </form>
+                <div class="task-result task-result-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-3">
+        <h2>Задача №3</h2>
+        <h3>Используя API, выведите список элементов на веб-страницу (например, список пользователей или товаров).</h3>
+        <div class="task-body">
+            <pre>
+            <code>
+
+            function getRequest3(method, url) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.open(method, url);
+                    xhr.onload = () => {
+                        if (xhr.status >= 400) {
+                            reject(xhr.response);
+                        } else {
+                            resolve(xhr.response);
+                        }
+                    }
+            
+                    xhr.onerror = () => {
+                        reject(xhr.response);
+                    }
+            
+                    xhr.send();
+                })
+            }
+
+            getRequest3('GET', 'https://jsonplaceholder.typicode.com/users')
+                .then(data => {
+                    data.forEach(el => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `
+                            &lt;div>name: ${el.name}&lt;/div>
+                            &lt;div>id: ${el.id}&lt;/div>
+                        `
+                        document.querySelector('.task-result-3').append(div);
+                    });
+                });
+            </code>
+            </pre>
+            <div class="task-data">
+                <button class="task-3-btn">Старт</button>
+                <div class="task-result task-result-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-4">
+        <h2>Задача №4</h2>
+        <h3>Напишите функцию, которая обрабатывает ошибки при работе с API (например, выводит сообщение об ошибке на страницу).</h3>
+        <div class="task-body">
+            <pre>
+            <code>
+
+            function getRequest4(method, url) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.setRequestHeader('Content-Type', 'application/json')
+                    xhr.open(method, url);
+                    xhr.onload = () => {
+                        if (xhr.status >= 400) {
+                            reject(xhr.response)
+                        } else {
+                            resolve(xhr.response);
+                        }
+                    }
+            
+                    xhr.onerror = () => {
+                        reject(xhr.response);
+                    }
+            
+                    xhr.send();
+                });
+            }
+
+            getRequest4('GET', 'https://jonplaceholder.typicode.com/users')
+            .then(data => {
+                document.querySelector('.task-result-4').textContent = JSON.stringify(data)
+            })
+            .catch(err => {
+                alert(err)
+                
+            });
+            </code>
+            </pre>
+            <div class="task-data">
+                <button class="task-4-btn">Старт</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="task-5">
+        <h2>Задача №5</h2>
+        <h3>Напишите скрипт, который делает запрос к API каждые 5 секунд и обновляет данные на странице</h3>
+        <div class="task-body">
+            <pre>
+            <code>
+
+            function getRequest5(method, url) {
+                return new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.open(method, url);
+                    xhr.onload = () => {
+                        if (xhr.status >= 400) {
+                            reject(xhr.response);
+                        } else {
+                            resolve(xhr.response);
+                        }
+                    }
+            
+                    xhr.send();
+                })
+            }
+            
+            function createElements(data) {
+                data.forEach(el => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        &lt;div>name: ${el.name}&lt;/div>
+                        &lt;div>id: ${el.id}&lt;/div>
+                        `
+                    document.querySelector('.task-result-5').append(div);
+                });
+            }
+            
+            let count = 0;
+
+            getRequest5('GET', 'https://jsonplaceholder.typicode.com/users')
+                .then(data => {
+                    createElements(data);
+                });
+
+            setInterval(() => {
+                document.querySelector('.task-result-5').innerHTML = '';
+            
+                setTimeout(() => {
+                    getRequest5('GET', 'https://jsonplaceholder.typicode.com/users')
+                        .then(data => {
+                            createElements(data);
+                        });
+                }, 500);
+                count++;
+            }, 5000);
+            </code>
+            </pre>
+            <div class="task-data">
+                <button class="task-5-btn">Старт</button>
+                <div class="task-result task-result-5"></div>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
